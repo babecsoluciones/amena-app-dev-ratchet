@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>AMENA</title>
+
+        <!-- Sets initial viewport load and disables zooming  -->
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+
+        <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <!-- Include the compiled Ratchet CSS -->
+        <link href="css/ratchet.css" rel="stylesheet" />
+
+        <!-- Include the compiled Ratchet JS -->
+        <script src="js/ratchet.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/jquery.serializejson.js"></script>
+
+        <style type="text/css">
+            .btnHeader {
+                color: #fff !important;
+            }
+            .divHeader {
+                background: #891fcb !important;
+                color: #fff !important;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Make sure all your bars are the first things in your <body> -->
+        <header class="bar bar-nav">
+            <a href="#myModalexample" class="icon icon-more-vertical pull-right"></a>
+            <h1 class="title"><img src="img/logo.png" style="margin-top: 5px; max-height: 30px;" /></h1>
+        </header>
+
+        <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+        <div class="content">
+            
+            <!--<div class="card">-->
+            <ul class="table-view" id="ulNoticias">
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="push-right" href="#detalle">
+                        <strong>Medicamento</strong>
+                    </a>
+                </li>
+            </ul>
+            <!--</div>-->
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="mensajes.html" data-ignore="push">
+                <span class="icon icon-compose"></span>
+                <span class="tab-label">Mensajes</span>
+            </a>
+            <a class="tab-item active" href="noticias.html" data-ignore="push">
+                <span class="icon icon-list"></span>
+                <span class="tab-label">Noticias</span>
+            </a>
+            <a class="tab-item" href="index.html" data-ignore="push">
+                <span class="icon icon-home"></span>
+                <span class="tab-label">Inicio</span>
+            </a>
+            <a class="tab-item" href="colaboradores.html" data-ignore="push">
+                <span class="icon icon-person"></span>
+                <span class="tab-label">Colaboradores</span>
+            </a>
+            <a class="tab-item" href="perfil.html" data-ignore="push">
+                <span class="icon icon-gear"></span>
+                <span class="tab-label">Perfil</span>
+            </a>
+        </nav>
+
+        <div id="myModalexample" class="modal">
+            <header class="bar bar-nav">
+                <!--<a class="icon icon-close pull-right" href="#myModalexample"></a>-->
+                <a class="icon icon icon-check pull-right" onclick="aplicarFiltros();"></a>
+                <h1 class="title">Filtros</h1>
+            </header>
+
+            <div class="content">
+               <form id="frmFil">
+                   <input type="hidden" id="accionFiltros" name="accion" value="fil-con"/>
+               
+                <div class="card">
+                    <ul class="table-view" id="ulFiltros">
+                        
+                    </ul>
+                </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="detalle" class="modal">
+            <header class="bar bar-nav">
+                <!--<a class="icon icon-close pull-right" href="#myModalexample"></a>-->
+                <a class="icon icon icon-close pull-right" href="#detalle"></a>
+                <h1 class="title">Detalle</h1>
+            </header>
+
+            <div class="content">
+                <div class="card">
+                    <ul class="table-view">
+                        <li class="table-view-cell">
+                            <p class="content-padded">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent cursus viverra nisl in volutpat. Nulla sollicitudin dapibus dictum. Quisque eleifend vel ipsum sit amet bibendum. Suspendisse potenti. Vestibulum sed metus dolor. Nunc mauris felis, feugiat eu volutpat euismod, faucibus vel mi. Nullam scelerisque, libero non tempor porta, erat neque pretium lacus, eu euismod dui mi eu ex. Sed molestie risus vitae porta vestibulum. In ultrices nunc eget volutpat pharetra. Pellentesque et nisi non nunc tempor venenatis. Phasellus blandit, risus vel consequat ornare, turpis orci viverra felis, ut vestibulum risus velit nec nunc. Nulla gravida dui ut libero rutrum, in condimentum nisl euismod.
+<br><br>
+Duis feugiat a neque nec eleifend. Sed a auctor velit. Aliquam porta quam eget vehicula ornare. Vestibulum elementum, augue nec egestas mollis, odio nunc porttitor orci, ac commodo ante ex sed odio. Vivamus est massa, aliquam id hendrerit sit amet, faucibus sed ligula. Curabitur fringilla at eros eu fermentum. Fusce vel interdum nunc. Duis a fermentum urna. Phasellus suscipit in mauris maximus tincidunt. Ut interdum congue sem, eget pulvinar urna vehicula quis. Nulla tincidunt mattis velit ac posuere. Praesent erat neque, ullamcorper in ex quis, accumsan fringilla sapien. In vestibulum vehicula interdum. Sed eget tortor rhoncus mauris gravida vehicula vitae at sapien. Curabitur venenatis mauris non nisl fermentum, auctor ultrices quam porta. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+<br><br>
+Curabitur ac urna mi. Phasellus suscipit, nulla vitae fringilla vehicula, risus arcu efficitur dolor, eget sagittis augue ipsum quis quam. Quisque sodales placerat odio, sit amet lobortis nisi consectetur at. In fermentum nulla non justo euismod scelerisque. Phasellus feugiat iaculis purus vel efficitur. Suspendisse potenti. Duis accumsan dolor pulvinar velit iaculis, at bibendum lacus vestibulum. Quisque tristique metus quis elit sollicitudin maximus. Praesent nec dui tempus risus luctus eleifend. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam mattis ante erat, ut sodales tortor aliquet eu.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!--loader-->
+		<div class="ajax-loader">
+         <table width="100%" height="100%">
+             <tr>
+                 <td align="center" valign="middle">
+                     <img src="img/ajax-loader.gif" class="img-responsive" width="25" height="25" />
+                 </td>
+             </tr>
+         </table>
+          
+        </div>
+		<!--loader-->
+        
+        <!--javascript-->
+        <script type="application/javascript">
+        var tURL = "https://cors-anywhere.herokuapp.com/https://app.vivirenpurpura.mx/app/app-01-02.php";
+            function cargarFiltros()
+            {
+                var obj = $('#frmFil').serializeJSON();
+                var jsonString = JSON.stringify(obj);
+                
+                $.ajax({
+                    type: "POST",
+                    
+                    url: tURL,
+                    data: jsonString,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){
+                       if(data.exito)
+                           {
+                               var listaFiltros = document.getElementById('ulFiltros');
+                               
+                               listaFiltros.innerHTML = '';
+                               
+                               var filtros = data.filtros;
+                               for(var i=0;i<filtros.length;i++)
+                                   {
+                                        listaFiltros.innerHTML += '<li class="table-view-cell"><label><input type="checkbox" name="filtros['+i+'][eCodTipoPublicacion]" value="'+filtros[i].codigo+'" '+(filtros[i].checado)+'> '+filtros[i].nombre+'</label></li>';       
+                                   }
+                           }
+                    },
+                   
+                    failure: function(errMsg) {
+                        alert('Error al enviar los datos.');
+                    }
+                });
+            }
+            
+            function aplicarFiltros()
+            {
+                $('#myModalexample').removeClass("active");
+                document.getElementById('accionFiltros').value = 'not-con';
+                var obj = $('#frmFil').serializeJSON();
+                var jsonString = JSON.stringify(obj);
+                
+                $.ajax({
+                    type: "POST",
+                    beforeSend: function(){
+                  $('.ajax-loader').css("visibility", "visible");
+                  
+                    },
+                    url: tURL,
+                    data: jsonString,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){
+                       if(data.exito)
+                           {
+                               var listaFiltros = document.getElementById('ulNoticias');
+                               
+                               listaFiltros.innerHTML = '';
+                               
+                               var filtros = data.lista;
+                               for(var i=0;i<filtros.length;i++)
+                                   {
+                                       if(filtros[i].codigo){
+                                        listaFiltros.innerHTML += '<li class="table-view-cell media">'+
+                                        '  <a class="navigate-right" onclick="asignarParametro(\''+filtros[i].codigo+'\');">'+
+                                        '    <img class="media-object pull-left" src="'+filtros[i].imagen+'" style="'+filtros[i].estilo+'">'+ '    <div class="media-body">'+ '      '+filtros[i].descripcion+ '      <p>'+filtros[i].titulo+'</p>'+ '    </div>'+'  </a>'+'</li>';
+                                       }
+                                   }
+                               document.getElementById('accionFiltros').value = 'fil-con';
+                           }
+                    },
+                    complete: function(){
+                  $('.ajax-loader').css("visibility", "hidden");
+                  
+                },
+                    failure: function(errMsg) {
+                        alert('Error al enviar los datos.');
+                    }
+                });
+            }
+            
+            $(document).ready(function() {
+            
+            cargarFiltros();
+                setTimeout(function(){
+                    aplicarFiltros();
+                },150);
+            
+        });
+        </script>
+        
+    </body>
+</html>
