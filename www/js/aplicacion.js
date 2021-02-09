@@ -1,4 +1,4 @@
-var tURL = "https://cors-anywhere.herokuapp.com/https://app.vivirenpurpura.mx/app/app-01-01.php";
+var tURL = "https://cors-anywhere.herokuapp.com/https://app.vivirenpurpura.mx/app/app-01-02.php";
 function iniciarSesion()
 {
           var obj = $('#datos').serializeJSON();
@@ -94,7 +94,7 @@ function cerrarSesion()
           if(confirm("\u{BF}Deseas cerrar la sesi\u{F3}n?"))
               {
                 localStorage.clear();
-                validarSesion();
+                window.location="log/index.html"; 
               }
           
         }

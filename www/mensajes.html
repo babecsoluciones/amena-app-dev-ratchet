@@ -40,17 +40,17 @@
         <div class="content">
             
             <!--<div class="card">-->
-            <ul class="table-view" id="ulNoticias" style="margin-top:-5px; padding-bottom:25px;">
+            <ul class="table-view" id="ulNoticias" style="margin-top:-5px;">
                 
             </ul>
             <!--</div>-->
         </div>
         <nav class="bar bar-tab">
-            <a class="tab-item" href="mensajes.html" data-ignore="push">
+            <a class="tab-item active" href="mensajes.html" data-ignore="push">
                 <span class="icon icon-compose"></span>
                 <span class="tab-label">Mensajes</span>
             </a>
-            <a class="tab-item active" href="noticias.html" data-ignore="push">
+            <a class="tab-item" href="noticias.html" data-ignore="push">
                 <span class="icon icon-list"></span>
                 <span class="tab-label">Noticias</span>
             </a>
@@ -77,7 +77,8 @@
 
             <div class="content">
                <form id="frmFil">
-                   <input type="hidden" id="accionFiltros" name="accion" value="fil-con"/>
+                  <input type="hidden" id="codigousuario" name="codigousuario" value="" />
+                   <input type="hidden" id="accionFiltros" name="accion" value="men-con"/>
                
                 <div class="card">
                     <ul class="table-view" id="ulFiltros" style="padding-bottom:25px;">
@@ -97,8 +98,8 @@
 
             <div class="content">
                <form id="detNot">
-                   <input type="hidden" id="codigoDetalle" name="accion" value="not-det" />
-                   <input type="hidden" id="codigoNoticia" name="codigo" value="" />
+                   <input type="hidden" id="codigoDetalle" name="accion" value="men-det" />
+                   <input type="hidden" id="codigoNoticia" name="codigomensaje" value="" />
                    <input type="hidden" id="codigoUsuario" name="codigousuario" value="" />
                </form>
                 <div class="card">
@@ -125,45 +126,10 @@
         <!--javascript-->
         <script type="application/javascript">
         var tURL = "https://cors-anywhere.herokuapp.com/https://app.vivirenpurpura.mx/app/app-01-02.php";
-            function cargarFiltros()
-            {
-                var obj = $('#frmFil').serializeJSON();
-                var jsonString = JSON.stringify(obj);
-                
-                $.ajax({
-                    type: "POST",
-                    
-                    url: tURL,
-                    data: jsonString,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data){
-                       if(data.exito)
-                           {
-                               var listaFiltros = document.getElementById('ulFiltros');
-                               
-                               listaFiltros.innerHTML = '';
-                               
-                               var filtros = data.filtros;
-                               for(var i=0;i<filtros.length;i++)
-                                   {
-                                       if(filtros[i].codigo>0){
-                                            listaFiltros.innerHTML += '<li class="table-view-cell"><label><input type="checkbox" name="filtros['+i+'][eCodTipoPublicacion]" value="'+filtros[i].codigo+'" '+(filtros[i].checado)+'> '+filtros[i].nombre+'</label></li>';       
-                                       }
-                                   }
-                           }
-                    },
-                   
-                    failure: function(errMsg) {
-                        alert('Error al enviar los datos.');
-                    }
-                });
-            }
             
-            function aplicarFiltros()
+            function cargarMensajes()
             {
-                $('#myModalexample').removeClass("active");
-                document.getElementById('accionFiltros').value = 'not-con';
+                document.getElementById('accionFiltros').value = 'men-con';
                 var obj = $('#frmFil').serializeJSON();
                 var jsonString = JSON.stringify(obj);
                 
@@ -178,23 +144,28 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(data){
-                       if(data.exito)
-                           {
+                       
                                var listaFiltros = document.getElementById('ulNoticias');
                                
                                listaFiltros.innerHTML = '';
                                
-                               var filtros = data.lista;
+                               var filtros = data.mensajes;
+                               if(filtros.length>0){
                                for(var i=0;i<filtros.length;i++)
                                    {
                                        if(filtros[i].codigo){
                                         listaFiltros.innerHTML += '<li class="table-view-cell media">'+
                                         '  <a class="navigate-right" onclick="asignarParametro(\''+filtros[i].codigo+'\');">'+
-                                        '    <img class="media-object pull-left" src="'+filtros[i].imagen+'" style="'+filtros[i].estilo+'">'+ '    <div class="media-body">'+ '      '+filtros[i].descripcion+ '      <p>'+filtros[i].titulo+'</p>'+ '    </div>'+'  </a>'+'</li>';
+                                        '    <div class="media-body">'+ '      '+filtros[i].descripcion+ '      <p>'+filtros[i].titulo+'</p>'+ '    </div>'+'  </a>'+'</li>';
                                        }
                                    }
-                               document.getElementById('accionFiltros').value = 'fil-con';
-                           }
+                               }
+                               else
+                                   {
+                                       listaFiltros.innerHTML += '<li class="table-view-cell media">Sin mensajes por el momento</li>';
+                                   }
+                               
+                           
                     },
                     complete: function(){
                   $('.ajax-loader').css("visibility", "hidden");
@@ -246,10 +217,11 @@
             }
             
             $(document).ready(function() {
-            
-            cargarFiltros();
+            document.getElementById('codigousuario').value = localStorage.getItem("codigousuario");
+            //document.getElementById('codigousuario').value = 19;
+            cargarMensajes();
                 setTimeout(function(){
-                    aplicarFiltros();
+                    cargarMensajes();
                 },150);
             
         });
