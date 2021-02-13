@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>AMENA</title>
+
+        <!-- Sets initial viewport load and disables zooming  -->
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+
+        <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <!-- Include the compiled Ratchet CSS -->
+        <link href="css/ratchet.css" rel="stylesheet" />
+        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+        <!-- Include the compiled Ratchet JS -->
+        <script src="js/ratchet.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/jquery.serializejson.js"></script>
+        <script src="js/aplicacion.js"></script>
+
+        <style type="text/css">
+            .btnHeader {
+                color: #fff !important;
+            }
+            .divHeader {
+                background: #891fcb !important;
+                color: #fff !important;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Make sure all your bars are the first things in your <body> -->
+        <header class="bar bar-nav">
+            <a onclick="cerrarSesion()" class="icon icon-list pull-right"></a>
+            <h1 class="title"><img src="img/logo.png" style="margin-top: 5px; max-height: 30px;" /></h1>
+        </header>
+
+        <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+        <div class="content">
+            <div style="height: 300px; background-image: url(img/bg-30.png); background-size: cover; margin-top: -10px; padding-top: 50px;">
+                <center>
+                    <img src="img/logo.png" style="max-height: 200px;" />
+                    <p class="content-padded" id="tUsuario">Bienvenido {Usuario}</p>
+                </center>
+            </div>
+        <!--formulario-->
+        <form class="input-group" id="perfil">
+         <input type="hidden" id="accion" name="accion" value="afi-reg" />
+         <input type="hidden" id="codigousuario" name="codigousuario" value="" />
+          <div class="input-row">
+            <label>Nombre</label>
+            <input id="tNombre" name="nombre" type="text" placeholder="">
+          </div>
+          <div class="input-row">
+            <label>Apellidos</label>
+            <input id="tApellidos" name="apellidos" type="text" placeholder="">
+          </div>
+          <div class="input-row">
+            <label>Correo</label>
+            <input id="tCorreo" name="correo" type="text" placeholder="">
+          </div>
+          <div class="input-row">
+            <label>Tel&eacute;fono</label>
+            <input id="tTelefono" name="telefono" type="text" placeholder="">
+          </div>
+          <div class="input-row">
+            <label>Password</label>
+            <input id="tPassword" name="password" type="password" placeholder="">
+          </div>
+        </form>
+        <button class="btn btn-positive btn-block" onclick="actualizarPerfil()">Actualizar Perfil</button>
+        <!--formulario-->
+        
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="mensajes.html" data-ignore="push">
+                <span class="icon icon-compose"></span>
+                <span class="tab-label">Mensajes</span>
+            </a>
+            <a class="tab-item" href="noticias.html" data-ignore="push">
+                <span class="icon icon-list"></span>
+                <span class="tab-label">Medicamentos</span>
+            </a>
+            <a class="tab-item" href="index.html" data-ignore="push">
+                <span class="icon icon-home"></span>
+                <span class="tab-label">Inicio</span>
+            </a>
+            <a class="tab-item" href="colaboradores.html" data-ignore="push">
+                <span class="icon icon-person"></span>
+                <span class="tab-label">Colaboradores</span>
+            </a>
+            <a class="tab-item active" href="perfil.html" data-ignore="push">
+                <span class="icon icon-gear"></span>
+                <span class="tab-label">Perfil</span>
+            </a>
+        </nav>
+
+        
+        <!--javascript-->
+        <script type="application/javascript">
+        
+              
+            function cargarPerfil()
+            {
+                document.getElementById('codigousuario').value = localStorage.getItem("codigousuario");
+                document.getElementById('tNombre').value    = localStorage.getItem("usuario");
+                document.getElementById('tCorreo').value    = localStorage.getItem("correo");
+                document.getElementById('tPassword').value  = localStorage.getItem("password");
+                document.getElementById('tTelefono').value  = localStorage.getItem("telefono");
+                document.getElementById('tApellidos').value = localStorage.getItem("apellidos");
+            }
+            
+            function actualizarPerfil()
+            {
+                  var obj = $('#perfil').serializeJSON();
+                  var jsonString = JSON.stringify(obj);
+                
+            
+                $.ajax({
+                    type: "POST",
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                  },
+                    url: tURL,
+                    data: jsonString,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){
+                        if(data.exito==1)
+                            {
+                                alert("Se actualizaron tus datos. Favor de iniciar sesion nuevamente...");
+                                localStorage.clear();
+                                window.location="log/index.html"; 
+                            }
+                        else
+                            {
+                                alert("Error al almacenar tus datos, intenta nuevamente");
+                            }
+                    },
+                    complete: function(){
+                        $('.ajax-loader').css("visibility", "hidden");
+                      },
+                    failure: function(errMsg) {
+                        alert('Error al enviar los datos.');
+                    }
+                });
+        
+            }
+            
+            $(document).ready(function() {
+            if(localStorage.getItem("codigousuario"))
+            {
+                document.getElementById('tUsuario').innerHTML = 'Bienvenido '+localStorage.getItem("usuario");
+                cargarPerfil(); 
+            }
+            else
+            {
+                window.location="log/index.html"; 
+            }
+            
+        });
+        </script>
+        
+    </body>
+</html>

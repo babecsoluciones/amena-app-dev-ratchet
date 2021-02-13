@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>AMENA</title>
+
+        <!-- Sets initial viewport load and disables zooming  -->
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+
+        <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <!-- Include the compiled Ratchet CSS -->
+        <link href="css/ratchet.css" rel="stylesheet" />
+
+        <!-- Include the compiled Ratchet JS -->
+        <script src="js/ratchet.js"></script>
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/jquery.serializejson.js"></script>
+
+        <style type="text/css">
+            .btnHeader {
+                color: #fff !important;
+            }
+            .divHeader {
+                background: #891fcb !important;
+                color: #fff !important;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Make sure all your bars are the first things in your <body> -->
+        <header class="bar bar-nav">
+            <a href="#myModalexample" class="icon icon-more-vertical pull-right"></a>
+            <h1 class="title"><img src="img/logo.png" style="margin-top: 5px; max-height: 30px;" /></h1>
+        </header>
+
+        <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+        <div class="content">
+            
+            <!--<div class="card">-->
+            <ul class="table-view" id="ulNoticias" style="margin-top:-5px;">
+                
+            </ul>
+            <!--</div>-->
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item active" href="mensajes.html" data-ignore="push">
+                <span class="icon icon-compose"></span>
+                <span class="tab-label">Mensajes</span>
+            </a>
+            <a class="tab-item" href="noticias.html" data-ignore="push">
+                <span class="icon icon-list"></span>
+                <span class="tab-label">Noticias</span>
+            </a>
+            <a class="tab-item" href="index.html" data-ignore="push">
+                <span class="icon icon-home"></span>
+                <span class="tab-label">Inicio</span>
+            </a>
+            <a class="tab-item" href="colaboradores.html" data-ignore="push">
+                <span class="icon icon-person"></span>
+                <span class="tab-label">Colaboradores</span>
+            </a>
+            <a class="tab-item" href="perfil.html" data-ignore="push">
+                <span class="icon icon-gear"></span>
+                <span class="tab-label">Perfil</span>
+            </a>
+        </nav>
+
+        <div id="myModalexample" class="modal">
+            <header class="bar bar-nav">
+                <a class="icon icon-close pull-left" href="#myModalexample"></a>
+                <a class="icon icon icon-check pull-right" onclick="aplicarFiltros();"></a>
+                <h1 class="title">Filtros</h1>
+            </header>
+
+            <div class="content">
+               <form id="frmFil">
+                  <input type="hidden" id="codigousuario" name="codigousuario" value="" />
+                   <input type="hidden" id="accionFiltros" name="accion" value="men-con"/>
+               
+                <div class="card">
+                    <ul class="table-view" id="ulFiltros" style="padding-bottom:25px;">
+                        
+                    </ul>
+                </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="detalle" class="modal">
+            <header class="bar bar-nav">
+                <!--<a class="icon icon-close pull-right" href="#myModalexample"></a>-->
+                <a class="icon icon icon-close pull-right" href="#detalle"></a>
+                <h1 class="title">Detalle</h1>
+            </header>
+
+            <div class="content">
+               <form id="detNot">
+                   <input type="hidden" id="codigoDetalle" name="accion" value="men-det" />
+                   <input type="hidden" id="codigoNoticia" name="codigomensaje" value="" />
+                   <input type="hidden" id="codigoUsuario" name="codigousuario" value="" />
+               </form>
+                <div class="card">
+                    <ul class="table-view" id="ulDetalle">
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!--loader-->
+		<div class="ajax-loader">
+         <table width="100%" height="100%">
+             <tr>
+                 <td align="center" valign="middle">
+                     <img src="img/ajax-loader.gif" class="img-responsive" width="25" height="25" />
+                 </td>
+             </tr>
+         </table>
+          
+        </div>
+		<!--loader-->
+        
+        <!--javascript-->
+        <script type="application/javascript">
+        var tURL = "https://cors-anywhere.herokuapp.com/https://app.vivirenpurpura.mx/app/app-01-02.php";
+            
+            function cargarMensajes()
+            {
+                document.getElementById('accionFiltros').value = 'men-con';
+                var obj = $('#frmFil').serializeJSON();
+                var jsonString = JSON.stringify(obj);
+                
+                $.ajax({
+                    type: "POST",
+                    beforeSend: function(){
+                  $('.ajax-loader').css("visibility", "visible");
+                  
+                    },
+                    url: tURL,
+                    data: jsonString,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){
+                       
+                               var listaFiltros = document.getElementById('ulNoticias');
+                               
+                               listaFiltros.innerHTML = '';
+                               
+                               var filtros = data.mensajes;
+                               if(filtros.length>0){
+                               for(var i=0;i<filtros.length;i++)
+                                   {
+                                       if(filtros[i].codigo){
+                                        listaFiltros.innerHTML += '<li class="table-view-cell media">'+
+                                        '  <a class="navigate-right" onclick="asignarParametro(\''+filtros[i].codigo+'\');">'+
+                                        '    <div class="media-body">'+ '      '+filtros[i].descripcion+ '      <p>'+filtros[i].titulo+'</p>'+ '    </div>'+'  </a>'+'</li>';
+                                       }
+                                   }
+                               }
+                               else
+                                   {
+                                       listaFiltros.innerHTML += '<li class="table-view-cell media">Sin mensajes por el momento</li>';
+                                   }
+                               
+                           
+                    },
+                    complete: function(){
+                  $('.ajax-loader').css("visibility", "hidden");
+                  
+                },
+                    failure: function(errMsg) {
+                        alert('Error al enviar los datos.');
+                    }
+                });
+            }
+            
+            function asignarParametro(codigo)
+            {
+                $('#detalle').addClass("active");
+                
+                var listaFiltros = document.getElementById('ulDetalle');
+                
+                listaFiltros.innerHTML = '<li class="table-view-cell"><center><img src="img/ajax-loader.gif" class="img-responsive" width="25" height="25" /></center></li>'; 
+                
+                document.getElementById('codigoNoticia').value = codigo;
+                var obj = $('#detNot').serializeJSON();
+                var jsonString = JSON.stringify(obj);
+                
+                $.ajax({
+                    type: "POST",
+                    
+                    url: tURL,
+                    data: jsonString,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){
+                       
+                               
+                               
+                               listaFiltros.innerHTML = '';
+                               
+                               var filtros = data.listas;
+                               for(var i=0;i<filtros.length;i++)
+                                   {
+                                        listaFiltros.innerHTML += '<li class="table-view-cell">'+filtros[i].contenido+'</li>';       
+                                   }
+                           
+                    },
+                   
+                    failure: function(errMsg) {
+                        alert('Error al enviar los datos.');
+                    }
+                });
+            }
+            
+            $(document).ready(function() {
+            document.getElementById('codigousuario').value = localStorage.getItem("codigousuario");
+            //document.getElementById('codigousuario').value = 19;
+            cargarMensajes();
+                setTimeout(function(){
+                    cargarMensajes();
+                },150);
+            
+        });
+        </script>
+        
+    </body>
+</html>
