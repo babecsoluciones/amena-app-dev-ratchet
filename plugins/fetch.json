@@ -1,16 +1,58 @@
 {
-  "cordova-plugin-device": {
+  "cordova-plugin-whitelist": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-device@^1.1.7"
+      "id": "cordova-plugin-whitelist@1"
     },
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-whitelist": {
+  "cordova-plugin-x-toast": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-whitelist@^1.3.4"
+      "id": "cordova-plugin-x-toast@1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-local-notification": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/katzer/cordova-plugin-local-notifications.git"
+    },
+    "is_top_level": true,
+    "variables": {
+      "ANDROID_SUPPORT_V4_VERSION": "26.+"
+    }
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-badge": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-badge@>=0.8.5"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "de.appplant.cordova.plugin.local-notification": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-local-notifications@1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-background-mode": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-background-mode@^0.7.3"
     },
     "is_top_level": true,
     "variables": {}

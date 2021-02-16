@@ -27,7 +27,6 @@
 	<platform name="android">
 		<allow-intent href="market:*" />
 		
-
 		<resource-file src="res/icon/android/hdpi.png" target="res/drawable/hdpi/icon.png" />
 		<resource-file src="res/icon/android/ldpi.png" target="res/drawable/ldpi/icon.png" />
 		<resource-file src="res/icon/android/mdpi.png" target="res/drawable/mdpi/icon.png" />

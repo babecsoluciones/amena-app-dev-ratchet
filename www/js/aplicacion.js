@@ -72,7 +72,7 @@ function validarCorreo()
                       
                     if(data.existe==1)
                         {
-                            //mostrarAlerta('El correo especificado ya existe',false);
+                            mostrarAlerta('El correo especificado ya existe',false);
                             alert('El correo especificado ya existe');
                             document.getElementById('tCorreo').value="";
                         }
@@ -87,11 +87,20 @@ function validarCorreo()
 function alertarRegistro()
 {
     
-    alert("Es necesario completar algunos datos...");
+    $('.ajax-loader').css("visibility", "visible");
+    
     setTimeout(function(){
+        $('.ajax-loader').css("visibility", "hidden");
+        $('#error').addClass("active");
+    },1000);
+    
+    setTimeout(function(){
+        $('#error').removeClass("active");
         var ref = window.open(encodeURI('https://comunidad.vivirenpurpura.mx'),'_blank','location=yes');
-    },2500);
+    },5500);
 }
+
+
 
 function aplicarDonacion()
 {
@@ -110,20 +119,23 @@ function aplicarDonacion()
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               success: function(data){
+                  $('.ajax-loader').css("visibility", "hidden");
                   if(data.exito==1)
                       {
-                        //mostrarAlerta("Registro correcto!",false);
-                        alert("Registro correcto!");
+                        $('#completo').addClass("active");
                         setTimeout(function(){
+                            $('#completo').removeClass("active");
                             document.location="index.html";
                         },2500);
-                          //alert("Registro correcto!");
+                         
                           
                       }
                   else
                       {
-                          alert("Error de registro!");
-                        //mostrarAlerta(data.mensaje,false);
+                          //alert("Error de registro!");
+                          $('#procesamiento').addClass("active");
+                          document.getElementById('msgError').innerHTML = data.mensaje;
+                        
                           //alert(data.mensaje);
                       }
               },
@@ -135,4 +147,10 @@ function aplicarDonacion()
               }
           }); 
         
+}
+
+
+function mostrarAlerta(tMensaje = false, bLargo = false)
+{
+    $('.error').text((tMensaje ? tMensaje : "\u{C9}xito! Informaci\u{F3}n guardada")).fadeIn(400).delay((bLargo ? 4000 : 2000)).fadeOut(400); 
 }

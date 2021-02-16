@@ -13,7 +13,8 @@
 
         <!-- Include the compiled Ratchet CSS -->
         <link href="css/ratchet.css" rel="stylesheet" />
-
+        
+        
         <!-- Include the compiled Ratchet JS -->
         <script src="js/ratchet.js"></script>
         <script src="js/jquery-1.11.1.min.js"></script>
@@ -79,6 +80,7 @@
             <div class="content">
                <form id="frmFil">
                    <input type="hidden" id="accionFiltros" name="accion" value="fil-con"/>
+                   <input type="hidden" id="eCodUsuario" name="codigousuario" value=""/>
                
                 <div class="card">
                     <ul class="table-view" id="ulFiltros" style="padding-bottom:25px;">
@@ -110,6 +112,60 @@
             </div>
         </div>
         
+        <div id="error" class="modal">
+            <header class="bar bar-nav">
+                <h1 class="title"></h1>
+            </header>
+
+            <div class="content">
+               <div class="card">
+                  <ul class="table-view">
+                    <li class="table-view-cell">No podemos procesar tu solicitud</li>
+                    <li class="table-view-cell table-view-divider">Causas</li>
+                    <li class="table-view-cell">Informaci&oacute;n incompleta en tu perfil</li>
+                    <li class="table-view-cell">Estudio Socioecon&oacute;mico incompleto</li>
+                    <li class="table-view-cell table-view-divider">Espera...</li>
+                    <li class="table-view-cell">Redirigiendo a la web...</li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="completo" class="modal">
+            <header class="bar bar-nav">
+                <h1 class="title"></h1>
+            </header>
+
+            <div class="content">
+               <div class="card">
+                  <ul class="table-view">
+                    <li class="table-view-cell">Tu solicitud ha sido procesada</li>
+                    <li class="table-view-cell"><center><img src="img/ok.png" style="max-width:250px;"></center></li>
+                    <li class="table-view-cell table-view-divider">¿Que sigue?</li>
+                    <li class="table-view-cell">Recibir&aacute;s un correo de confirmaci&oacute;n</li>
+                    <li class="table-view-cell">Podr&aacute;s recibir mensajes asociados a tu solicitud</li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div id="procesamiento" class="modal">
+            <header class="bar bar-nav">
+               <a class="icon icon-close pull-left" href="#procesamiento"></a>
+                <h1 class="title"></h1>
+            </header>
+
+            <div class="content">
+               <div class="card">
+                  <ul class="table-view">
+                    <li class="table-view-cell">Tu solicitud NO pudo ser procesada</li>
+                    <li class="table-view-cell table-view-divider">¿Causas?</li>
+                    <li class="table-view-cell" id="msgError"></li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        
         <!--loader-->
 		<div class="ajax-loader">
          <table width="100%" height="100%">
@@ -122,6 +178,10 @@
           
         </div>
 		<!--loader-->
+       
+       <div class='error' style='display:none'>I did something!</div>
+        
+        
         
         <!--javascript-->
         <script type="application/javascript">
@@ -162,6 +222,7 @@
             
             function aplicarFiltros()
             {
+                document.getElementById('eCodUsuario').value = localStorage.getItem("codigousuario");
                 $('#myModalexample').removeClass("active");
                 document.getElementById('accionFiltros').value = 'not-con';
                 var obj = $('#frmFil').serializeJSON();
@@ -246,7 +307,8 @@
             }
             
             $(document).ready(function() {
-            
+            document.getElementById('eCodUsuario').value = localStorage.getItem("codigousuario");
+            document.getElementById('codigoUsuario').value = localStorage.getItem("codigousuario");
             cargarFiltros();
                 setTimeout(function(){
                     aplicarFiltros();
