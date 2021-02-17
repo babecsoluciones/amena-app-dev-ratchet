@@ -97,7 +97,7 @@ function alertarRegistro()
     setTimeout(function(){
         $('#error').removeClass("active");
         var ref = window.open(encodeURI('https://comunidad.vivirenpurpura.mx'),'_blank','location=yes');
-    },5500);
+    },7000);
 }
 
 

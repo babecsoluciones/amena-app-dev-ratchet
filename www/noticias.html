@@ -119,7 +119,7 @@
 
             <div class="content">
                <div class="card">
-                  <ul class="table-view">
+                  <ul class="table-view" id="ulAlertas">
                     <li class="table-view-cell">No podemos procesar tu solicitud</li>
                     <li class="table-view-cell table-view-divider">Causas</li>
                     <li class="table-view-cell">Informaci&oacute;n incompleta en tu perfil</li>
@@ -297,6 +297,21 @@
                                    {
                                         listaFiltros.innerHTML += '<li class="table-view-cell">'+filtros[i].contenido+'</li>';       
                                    }
+                        
+                                var alertas = data.restantes;
+                        
+                        var ulAlertas = document.getElementById('ulAlertas');
+                        
+                        ulAlertas.innerHTML = '<li class="table-view-cell">No podemos procesar tu solicitud</li>';
+                        ulAlertas.innerHTML += '<li class="table-view-cell table-view-divider">Causas</li>';
+    
+                        for(var i=0;i<alertas.length;i++)
+                            {
+                                 ulAlertas.innerHTML += '<li class="table-view-cell">'+alertas[i]+'</li>';
+                            }
+                        
+                        ulAlertas.innerHTML += '<li class="table-view-cell table-view-divider">Espera...</li>';
+                        ulAlertas.innerHTML += '<li class="table-view-cell">Redirigiendo a la web...</li>';
                            
                     },
                    
