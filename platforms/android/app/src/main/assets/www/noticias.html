@@ -37,12 +37,17 @@
             <a href="#myModalexample" class="icon icon-more-vertical pull-right"></a>
             <h1 class="title"><img src="img/logo.png" style="margin-top: 5px; max-height: 30px;" /></h1>
         </header>
+        <div class="bar bar-standard bar-header-secondary">
+      <form class="input-group">
+          <input type="text" id="buscar" placeholder="Buscar..." onkeyup="asignarBusqueda(this.value)">
+        </form>
+    </div>
 
         <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
-        <div class="content">
+        <div class="content" style="padding-top:90px; padding-bottom:55px;">
             
             <!--<div class="card">-->
-            <ul class="table-view" id="ulNoticias" style="margin-top:-5px; padding-bottom:25px;">
+            <ul class="table-view" id="ulNoticias">
                 
             </ul>
             <!--</div>-->
@@ -81,10 +86,16 @@
                <form id="frmFil">
                    <input type="hidden" id="accionFiltros" name="accion" value="fil-con"/>
                    <input type="hidden" id="eCodUsuario" name="codigousuario" value=""/>
-               
+                   <input type="hidden" id="tBusqueda" name="busqueda" value="">
                 <div class="card">
-                    <ul class="table-view" id="ulFiltros" style="padding-bottom:25px;">
+                    <ul class="table-view" id="ulFiltros" >
                         
+                    </ul>
+                </div>
+                <br>
+                <div class="card">
+                    <ul class="table-view" >
+                        <li class="table-view-cell"><label><input type="checkbox" name="bAgotados" value="1" > Ocultar agotados</label></li>
                     </ul>
                 </div>
                 </form>
@@ -119,7 +130,7 @@
 
             <div class="content">
                <div class="card">
-                  <ul class="table-view">
+                  <ul class="table-view" id="ulAlertas">
                     <li class="table-view-cell">No podemos procesar tu solicitud</li>
                     <li class="table-view-cell table-view-divider">Causas</li>
                     <li class="table-view-cell">Informaci&oacute;n incompleta en tu perfil</li>
@@ -220,7 +231,7 @@
                 });
             }
             
-            function aplicarFiltros()
+            function aplicarFiltros(bMostrar = true)
             {
                 document.getElementById('eCodUsuario').value = localStorage.getItem("codigousuario");
                 $('#myModalexample').removeClass("active");
@@ -231,7 +242,7 @@
                 $.ajax({
                     type: "POST",
                     beforeSend: function(){
-                  $('.ajax-loader').css("visibility", "visible");
+                  $('.ajax-loader').css("visibility", (bMostrar ? "visible" : "hidden"));
                   
                     },
                     url: tURL,
@@ -267,6 +278,14 @@
                 });
             }
             
+            function asignarBusqueda(cadena)
+            {
+                document.getElementById('tBusqueda').value = (cadena.length>1) ? cadena : "";
+                setTimeout(function(){
+                   aplicarFiltros(false); 
+                },50);
+            }
+            
             function asignarParametro(codigo)
             {
                 $('#detalle').addClass("active");
@@ -297,6 +316,21 @@
                                    {
                                         listaFiltros.innerHTML += '<li class="table-view-cell">'+filtros[i].contenido+'</li>';       
                                    }
+                        
+                                var alertas = data.restantes;
+                        
+                        var ulAlertas = document.getElementById('ulAlertas');
+                        
+                        ulAlertas.innerHTML = '<li class="table-view-cell">No podemos procesar tu solicitud</li>';
+                        ulAlertas.innerHTML += '<li class="table-view-cell table-view-divider">Causas</li>';
+    
+                        for(var i=0;i<alertas.length;i++)
+                            {
+                                 ulAlertas.innerHTML += '<li class="table-view-cell">'+alertas[i]+'</li>';
+                            }
+                        
+                        ulAlertas.innerHTML += '<li class="table-view-cell table-view-divider">Espera...</li>';
+                        ulAlertas.innerHTML += '<li class="table-view-cell">Redirigiendo a la web...</li>';
                            
                     },
                    

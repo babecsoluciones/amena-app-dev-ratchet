@@ -1,7 +1,7 @@
 /*var tURL = "https://cors-anywhere.herokuapp.com/https://app.vivirenpurpura.mx/app/app-01-02.php";
 var tURL = "https://app.vivirenpurpura.mx/app/app-01-02.php";
 var tURL = "https://thingproxy.freeboard.io/fetch/https://app.vivirenpurpura.mx/app/app-01-02.php";*/
-var tURL = "https://3.140.203.13/vep/app-01-02.php";
+var tURL = "https://3.142.71.179/vep/app-01-03.php";
 
 function iniciarSesion()
 {
